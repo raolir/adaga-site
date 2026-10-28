@@ -19,116 +19,62 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+/* Integrated wordmark proposal: all pair spacing scales with the font. */
 .landing {
-  position: relative;
-  z-index: 1;
   min-height: 100vh;
   min-height: 100svh;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-/* Coordinates follow the supplied 1536 × 1024 reference.
-   Smaller desktops scale the complete composition uniformly. */
-.composition {
-  --u: min(1px, calc(100vw / 1536), calc(100svh / 1024));
-  position: relative;
-  width: calc(1536 * var(--u));
-  height: calc(1024 * var(--u));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(88px, 12.5svh, 136px);
+  padding: 64px 24px;
   text-align: center;
+  position: relative;
 }
-.symbol {
-  position: absolute;
-  top: calc(48 * var(--u));
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(270 * var(--u));
-  height: calc(480 * var(--u));
-}
-h1 {
-  position: absolute;
-  top: calc(504 * var(--u));
-  left: 0;
-  width: 100%;
+.identity { width: 100%; max-width: 1000px; }
+.wordmark {
   margin: 0;
+  color: #ede8df;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: calc(144 * var(--u));
+  font-size: clamp(96px, min(31vw, 29svh), 264px);
   font-weight: 400;
-  line-height: calc(160 * var(--u));
-  letter-spacing: calc(3 * var(--u));
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.initial { letter-spacing: .003472222em; }
+.dagger-d {
+  display: inline-block;
+  width: .501344653em;
+  height: 1.041666667em;
+  vertical-align: -.027777778em;
+  margin-left: -.069444444em;
+  margin-right: -.138888889em;
 }
 .tagline {
-  position: absolute;
-  top: calc(688 * var(--u));
-  left: 0;
-  width: 100%;
-  margin: 0;
+  margin: clamp(64px, 10.55svh, 112px) 0 0;
   color: #c8c3bb;
-  font-size: calc(32 * var(--u));
+  font-size: clamp(18px, 2.7vw, 28px);
   font-weight: 400;
-  line-height: calc(42 * var(--u));
-  letter-spacing: calc(1.6 * var(--u));
+  line-height: 1.5;
+  letter-spacing: 1.2px;
 }
 .tagline span { display: block; }
-.rule {
-  position: absolute;
-  top: calc(842 * var(--u));
-  left: 50%;
-  width: calc(28 * var(--u));
-  height: 1px;
-  transform: translateX(-50%);
-  background: #b0aaa066;
-}
-.github {
-  position: absolute;
-  top: calc(883 * var(--u));
-  left: 50%;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  transform: translateX(-50%);
-  color: #b9b6b0;
-  border-radius: 50%;
-}
-.github svg {
-  display: block;
-  width: calc(32 * var(--u));
-  height: calc(32 * var(--u));
-}
+.footer { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+.rule { width: 28px; height: 1px; background: #b0aaa066; }
+.github { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: #b9b6b0; }
+.github svg { display: block; width: 30px; height: 30px; }
 .github:hover { color: #f0e8dc; }
 .github:focus-visible { outline: 1px solid #e2d4bb; outline-offset: 5px; }
 ::selection { background: #d8c8ac; color: #101216; }
-/* Narrow screens retain the hierarchy with readable text. */
 @media (max-width: 760px) {
-  .landing { padding: 36px 20px; }
-  .composition {
-    --u: 1px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: auto;
-  }
-  .symbol, h1, .tagline, .rule, .github { position: static; transform: none; }
-  .symbol {
-    --symbol-height: clamp(260px, 38svh, 340px);
-    width: calc(var(--symbol-height) * 200 / 356);
-    height: var(--symbol-height);
-    margin-bottom: 12px;
-  }
-  h1 { font-size: clamp(88px, 27vw, 112px); line-height: 1.1; letter-spacing: 0.3px; }
-  .tagline {
-    margin-top: 28px;
-    font-size: clamp(17px, 4.8vw, 24px);
-    line-height: 1.45;
-    letter-spacing: 0.65px;
-  }
-  .rule { width: 23px; margin-top: 48px; }
-  .github { margin-top: 24px; }
+  .landing { gap: clamp(64px, 10svh, 96px); padding: 40px 24px; }
+  .tagline { margin-top: clamp(40px, 6.2svh, 56px); font-size: clamp(17px, 4.6vw, 18px); letter-spacing: .65px; }
+  .footer { gap: 24px; }
+  .rule { width: 23px; }
   .github svg { width: 28px; height: 28px; }
 }
-
 /* Cormorant Garamond: embedded Latin subset.
 Copyright 2015 the Cormorant Project Authors (github.com/CatharsisFonts/Cormorant)
 
