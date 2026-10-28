@@ -1,0 +1,42 @@
+
+name: Deploy Adaga Site
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      CF_SEND_TELEMETRY: "false"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm and Node.js
+        uses: pnpm/setup@v3
+        with:
+          version: 12.15.0
+          runtime: node@24
+          cache: true
+          require-lockfile: true
+
+      - name: Build website
+        run: pnpm exec cf build
+
+      - name: Validate deployment
+        run: pnpm exec cf deploy --prebuilt --mode production --dry-run
+
+      - name: Deploy to Cloudflare
+        if: github.event_name == 'push'
+        run: pnpm exec cf deploy --prebuilt --mode production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
